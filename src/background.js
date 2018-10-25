@@ -6,9 +6,18 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+
+const adapter = new FileSync('db.json')
+const db = low(adapter)
+
+// Set some defaults (required if your JSON file is empty)
+// db.defaults({ posts: [], user: {}, count: 0 })
+//   .write()
 
 const log = require('electron-log')
-log.transports.file.file = __dirname + '/log.txt';
+// log.transports.file.file = __dirname + '/log.txt';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,7 +27,7 @@ let win
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 })
+  win = new BrowserWindow({ width: 1000, height: 700 })
 
   if (isDevelopment) {
     // Load the url of the dev server if in development mode
